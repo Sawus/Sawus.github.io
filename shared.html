@@ -1,0 +1,54 @@
+<div id='topBar'>
+    <button id="hamburger" class="hamburger hamburger--elastic" type="button">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+    <div>
+        <a href="https://www.w3schools.com">
+            <img id="N64" src="images/N64.png">
+        </a>
+    </div>
+    <!--<div id="input">
+        <input type="text" placeholder="Search.." name="search">
+    </div>-->
+</div>
+
+<div id="sidebar">
+    <div class="sidebarContainer">
+        <div class="sidebarItems">
+            <a asp-controller="Model" asp-action="Index">
+                <div style="height: 100%; width: 100%">
+                    <img class="sidebarIcons" src="images/3Dmodel.png">
+                    <div class="sidebarText">3D Models</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebarItems">
+            <a asp-controller="Game" asp-action="Index">
+                <div style="height: 100%; width: 100%">
+                    <img class="sidebarIcons" src="images/joystick.png">
+                    <div class="sidebarText">Games</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebarItems">
+            <a asp-controller="Video" asp-action="Index">
+                <div style="height: 100%; width: 100%">
+                    <img class="sidebarIcons" src="images/clapperboard.png">
+                    <div class="sidebarText">Videos</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebarItems">
+            <a asp-controller="Emulation" asp-action="Index">
+                <div style="height: 100%; width: 100%">
+                    <img class="sidebarIcons" src="images/game-cartridge.png">
+                    <div class="sidebarText">Emulation</div>
+                </div>
+            </a>
+        </div>
+        
+        
+    </div>
+</div>
