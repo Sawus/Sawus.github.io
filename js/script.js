@@ -1,12 +1,14 @@
 // Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
-//var shared = document.getElementById("shared");
-//shared.load('shared.html');
-//$('#shared').load('shared.html');
 
 // Init Variables
 var hamburger;
+var homeButton;
 var sidebar;
+var sidebarGames;
+var sidebarApps;
+var sidebarModels;
+var sidebarAbout;
 var content;
 
 var x = window.matchMedia("(min-width: 1025px)");
@@ -14,10 +16,11 @@ var x = window.matchMedia("(min-width: 1025px)");
 var running = true;
 
 // JQuery Load Shared HTML
-$.get("shared.html", function(data){
+$.get("html/shared.html", function(data){
     $("#shared").replaceWith(data);
     onLoad();
 });
+
 
 window.onresize = function (event) {
     sidebar.style.height = window.innerHeight - 60 + 'px';
@@ -82,9 +85,43 @@ function sidebarSlide() {
     }
 }
 
+function switchContent(event) {
+    console.log("Yup." + event.currentTarget.content);
+    $.get(event.currentTarget.content, function(data){
+        $("#content").replaceWith(data);
+    });
+
+    if(event.currentTarget != homeButton)
+        updateHamburger();
+}
+
 function onLoad() {
     hamburger = document.getElementById("hamburger");
     hamburger.addEventListener("click", updateHamburger);
+    // Home
+    homeButton = document.getElementById("homeButton");
+    homeButton.addEventListener("click", switchContent);
+    homeButton.content = "html/home.html";
+    //Jquery Replace Content With Home Page
+    $.get("html/home.html", function(data){
+        $("#content").replaceWith(data);
+    });
+    // Games
+    sidebarGames = document.getElementById("sidebarGames");
+    sidebarGames.addEventListener("click", switchContent);
+    sidebarGames.content = "html/games.html";
+    // Apps
+    sidebarApps = document.getElementById("sidebarApps");
+    sidebarApps.addEventListener("click", switchContent);
+    sidebarApps.content = "html/apps.html";
+    // 3D Models
+    sidebarModels = document.getElementById("sidebarModels");
+    sidebarModels.addEventListener("click", switchContent);
+    sidebarModels.content = "html/models.html";
+    // About Me
+    sidebarAbout = document.getElementById("sidebarAbout");
+    sidebarAbout.addEventListener("click", switchContent);
+    sidebarAbout.content = "html/aboutMe.html";
     
     sidebar = document.getElementById("sidebar");
     sidebar.width = 180;

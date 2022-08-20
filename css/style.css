@@ -67,7 +67,7 @@ canvas {
   border-radius: 0 8px 8px 0;
 }
 
-#N64 {
+#homeButton {
   height: 50px;
   max-width: 50px;
   top: 5px;
@@ -93,6 +93,8 @@ canvas {
 
 .sidebarItems:hover {
   background-color: silver;
+  border: 1px solid #a0a0a0;
+  box-shadow: 3px 3px 0 #a0a0a0;
 }
 
 .sidebarIcons {
