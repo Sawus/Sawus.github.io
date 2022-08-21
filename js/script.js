@@ -10,6 +10,19 @@ var sidebarApps;
 var sidebarModels;
 var sidebarAbout;
 var content;
+var leftArrow;
+var rightArrow;
+
+var gameCatalog = {
+     tearDevil: {
+        imgSrc: ["images/TearDevil_0.png", "images/TearDevil_1.png", "images/TearDevil_2.png"],
+        imgIndex: 0
+    },
+    jumpGame: {
+        imgSrc: ["images/TearDevil_0.png", "images/TearDevil_1.png", "images/TearDevil_2.png"],
+        imgIndex: 0
+    }
+}
 
 var x = window.matchMedia("(min-width: 1025px)");
     
@@ -21,7 +34,6 @@ $.get("html/shared.html", function(data){
     onLoad();
 });
 
-
 window.onresize = function (event) {
     sidebar.style.height = window.innerHeight - 60 + 'px';
     content.style.height = window.innerHeight - 60 + 'px';
@@ -31,7 +43,6 @@ function updateHamburger() {
     console.log("Clicked");
     if (running) {
         running = false;
-
         if (hamburger.className != "hamburger hamburger--elastic is-active")
             hamburger.className = "hamburger hamburger--elastic is-active";
         else
@@ -44,17 +55,9 @@ function updateHamburger() {
 }
 
 function sidebarSlide() {
-    //var slideSpeed = 12;
     var openPosition = -sidebar.shadow;
     var closePosition = -sidebar.width;
     if (hamburger.className == "hamburger hamburger--elastic is-active") {
-        /*if (parseInt(sidebar.style.left) < openPosition) {
-            sidebar.style.left = parseInt(sidebar.style.left) + slideSpeed + "px";
-            if (x.matches) {
-                content.style.left = parseInt(content.style.left) + slideSpeed + "px";
-            }
-            setTimeout(sidebarSlide, 1);
-        }*/
         if (x.matches) {
             content.style.marginLeft = "184px";
             sidebar.style.width = "180px";
@@ -65,14 +68,6 @@ function sidebarSlide() {
         sidebar.style.marginLeft = "184px";
     }
     else {
-        /*if (parseInt(sidebar.style.left) > closePosition) {
-            sidebar.style.left = parseInt(sidebar.style.left) - slideSpeed + "px";
-            if (x.matches) {
-                content.style.left = parseInt(content.style.left) - slideSpeed + "px";
-            }
-            setTimeout(sidebarSlide, 1);
-        }*/
-        
         if (x.matches) {
             sidebar.style.marginLeft = "0px";
             content.style.marginLeft = "0px";
@@ -86,13 +81,53 @@ function sidebarSlide() {
 }
 
 function switchContent(event) {
-    console.log("Yup." + event.currentTarget.content);
+    // Replace Date in Content
     $.get(event.currentTarget.content, function(data){
         $("#content").replaceWith(data);
     });
-
+    // Automatically Close Menu
     if(event.currentTarget != homeButton)
         updateHamburger();
+    // Extra Functionality for Games 
+    if(event.currentTarget.id == sidebarGames.id) {
+        setTimeout(function () {
+            onLoadGames();
+        }, 500) 
+    }  
+}
+
+function onLoadGames() {
+    var allContainers = document.querySelectorAll(".pictureGridContainer");
+    //console.log(allContainers);
+    allContainers.forEach(element => {
+        //console.log(element);
+        var leftArrow = element.querySelector(".leftArrow");
+        leftArrow.addEventListener("click", switchImage);
+        leftArrow.modifier = -1;
+        leftArrow.owner = element;
+        var rightArrow = element.querySelector(".rightArrow");
+        rightArrow.addEventListener("click", switchImage);
+        rightArrow.modifier = 1;
+        rightArrow.owner = element;
+    });
+
+    // Reset Values
+    tearDevil.imgIndex = 0;
+}
+
+function switchImage(event) {
+    // Gets Game That Event Was Called For
+    var game = gameCatalog[event.currentTarget.owner.id];
+    // Change Index
+    game.imgIndex += event.currentTarget.modifier;
+    // If Higher Or Lower Then Amount of Pictures, Reset
+    if(game.imgIndex < 0)
+        game.imgIndex = game.imgSrc.length - 1;
+    else if(game.imgIndex >= game.imgSrc.length)
+        game.imgIndex = 0;
+    // Update Current Picture
+    event.currentTarget.owner.querySelector(".gamePictures").src = game.imgSrc[game.imgIndex];
+    console.log(event.currentTarget.owner.id + ": " + game.imgIndex);
 }
 
 function onLoad() {
@@ -102,10 +137,7 @@ function onLoad() {
     homeButton = document.getElementById("homeButton");
     homeButton.addEventListener("click", switchContent);
     homeButton.content = "html/home.html";
-    //Jquery Replace Content With Home Page
-    $.get("html/home.html", function(data){
-        $("#content").replaceWith(data);
-    });
+
     // Games
     sidebarGames = document.getElementById("sidebarGames");
     sidebarGames.addEventListener("click", switchContent);
@@ -129,6 +161,10 @@ function onLoad() {
     
     content = document.getElementById("content");
 
+    //Jquery Replace Content With Home Page
+    $.get("html/home.html", function(data){    
+        $("#content").replaceWith(data);
+    });
 
     sidebar.style.height = window.innerHeight - 60 + 'px';
     sidebar.style.width = sidebar.width + 'px';
