@@ -14,11 +14,19 @@ var leftArrow;
 var rightArrow;
 
 var gameCatalog = {
-     tearDevil: {
+    tearDevil: {
         imgSrc: ["images/TearDevil_0.png", "images/TearDevil_1.png", "images/TearDevil_2.png"],
         imgIndex: 0
     },
     jumpGame: {
+        imgSrc: ["images/TearDevil_0.png", "images/TearDevil_1.png", "images/TearDevil_2.png"],
+        imgIndex: 0
+    },
+    isoStrategy: {
+        imgSrc: ["images/TearDevil_0.png", "images/TearDevil_1.png", "images/TearDevil_2.png"],
+        imgIndex: 0
+    },
+    mathGame: {
         imgSrc: ["images/TearDevil_0.png", "images/TearDevil_1.png", "images/TearDevil_2.png"],
         imgIndex: 0
     }
@@ -86,7 +94,7 @@ function switchContent(event) {
         $("#content").replaceWith(data);
     });
     // Automatically Close Menu
-    if(event.currentTarget != homeButton)
+    if(event.currentTarget.id.includes("sidebar"))
         updateHamburger();
     // Extra Functionality for Games 
     if(event.currentTarget.id == sidebarGames.id) {
@@ -97,22 +105,31 @@ function switchContent(event) {
 }
 
 function onLoadGames() {
-    var allContainers = document.querySelectorAll(".pictureGridContainer");
-    //console.log(allContainers);
-    allContainers.forEach(element => {
-        //console.log(element);
-        var leftArrow = element.querySelector(".leftArrow");
+    var gridContainer = document.querySelector(".gamesGridContainer");
+    var gameContainer = gridContainer.querySelectorAll(".gameMenu");
+    // Iterate Through Menus
+    gameContainer.forEach(element => {
+        // Title
+        var title = element.querySelector(".gameTitle");
+        title.addEventListener("click", switchContent);
+        title.content = "html/games/" + element.id + ".html";
+        
+        // Pictures
+        var pictureContainer = element.querySelector(".pictureGridContainer")
+        var leftArrow = pictureContainer.querySelector(".leftArrow");
         leftArrow.addEventListener("click", switchImage);
         leftArrow.modifier = -1;
         leftArrow.owner = element;
-        var rightArrow = element.querySelector(".rightArrow");
+        var rightArrow = pictureContainer.querySelector(".rightArrow");
         rightArrow.addEventListener("click", switchImage);
         rightArrow.modifier = 1;
         rightArrow.owner = element;
     });
 
     // Reset Values
-    tearDevil.imgIndex = 0;
+    for (var game in gameCatalog) {
+        gameCatalog[game].imgIndex = 0;
+    }
 }
 
 function switchImage(event) {
