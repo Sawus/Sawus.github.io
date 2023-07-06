@@ -5,30 +5,38 @@
 var hamburger;
 var homeButton;
 var sidebar;
+var sidebarContainer = [];
+var gamesContainer = [];
 var sidebarGames;
 var sidebarApps;
 var sidebarModels;
 var sidebarAbout;
 var content;
+var currentHash;
 var leftArrow;
 var rightArrow;
 
 var gameCatalog = {
     tearDevil: {
         imgSrc: ["images/TearDevil_0.png", "images/TearDevil_1.png", "images/TearDevil_2.png"],
-        imgIndex: 0
+        imgIndex: 0,
+        content: "html/games/tearDevil.html",
+        //hash: element.id
     },
     jumpGame: {
         imgSrc: ["images/TearDevil_0.png", "images/TearDevil_1.png", "images/TearDevil_2.png"],
-        imgIndex: 0
+        imgIndex: 0,
+        content: "html/games/jumpGame.html",
     },
     isoStrategy: {
         imgSrc: ["images/TearDevil_0.png", "images/TearDevil_1.png", "images/TearDevil_2.png"],
-        imgIndex: 0
+        imgIndex: 0,
+        content: "html/games/isoStrategy.html",
     },
     mathGame: {
         imgSrc: ["images/TearDevil_0.png", "images/TearDevil_1.png", "images/TearDevil_2.png"],
-        imgIndex: 0
+        imgIndex: 0,
+        content: "html/games/mathGame.html",
     }
 }
 
@@ -40,6 +48,13 @@ var running = true;
 $.get("html/shared.html", function(data){
     $("#shared").replaceWith(data);
     onLoad();
+    //onLoadGames();
+    GetHash();
+});
+
+window.addEventListener('hashchange',() =>{
+    //console.log('The URL has has changed');
+    GetHash();
 });
 
 window.onresize = function (event) {
@@ -48,7 +63,7 @@ window.onresize = function (event) {
 };
 
 function updateHamburger() {
-    console.log("Clicked");
+    //console.log("Clicked");
     if (running) {
         running = false;
         if (hamburger.className != "hamburger hamburger--elastic is-active")
@@ -88,20 +103,31 @@ function sidebarSlide() {
     }
 }
 
-function switchContent(event) {
-    // Replace Date in Content
-    $.get(event.currentTarget.content, function(data){
-        $("#content").replaceWith(data);
-    });
-    // Automatically Close Menu
-    if(event.currentTarget.id.includes("sidebar"))
-        updateHamburger();
+function onNavigationClick(event) {
+    
+    switchContent(event.currentTarget.content)
     // Extra Functionality for Games 
-    if(event.currentTarget.id == sidebarGames.id) {
+    if(event.currentTarget.id == sidebarContainer.find(object => object.hash === "Games").id) {
         setTimeout(function () {
             onLoadGames();
         }, 500) 
     }  
+
+    location.hash = event.currentTarget.hash;
+}
+function switchContent(content)
+{
+    // Replace Date in Content
+    $.get(content, function(data){
+        $("#content").replaceWith(data);
+    });
+    // Automatically Close Menu
+    // if(event.currentTarget.id.includes("sidebar"))
+    // {
+        
+    // }
+    if (hamburger.className == "hamburger hamburger--elastic is-active")
+        updateHamburger();
 }
 
 function onLoadGames() {
@@ -111,8 +137,10 @@ function onLoadGames() {
     gameContainer.forEach(element => {
         // Title
         var title = element.querySelector(".gameTitle");
-        title.addEventListener("click", switchContent);
+        title.addEventListener("click", onNavigationClick);
         title.content = "html/games/" + element.id + ".html";
+        title.hash = element.id;
+        gamesContainer.push(title);
         
         // Pictures
         var pictureContainer = element.querySelector(".pictureGridContainer")
@@ -151,26 +179,37 @@ function onLoad() {
     hamburger = document.getElementById("hamburger");
     hamburger.addEventListener("click", updateHamburger);
     // Home
-    homeButton = document.getElementById("homeButton");
-    homeButton.addEventListener("click", switchContent);
-    homeButton.content = "html/home.html";
+    var home = document.getElementById("homeButton");
+    home.addEventListener("click", onNavigationClick);
+    home.content = "html/home.html";
+    home.hash = "Home";
+    sidebarContainer.push(home);
+
 
     // Games
-    sidebarGames = document.getElementById("sidebarGames");
-    sidebarGames.addEventListener("click", switchContent);
-    sidebarGames.content = "html/games.html";
+    var games = document.getElementById("sidebarGames");
+    games.addEventListener("click", onNavigationClick);
+    games.content = "html/games.html";
+    games.hash = "Games";
+    sidebarContainer.push(games);
     // Apps
-    sidebarApps = document.getElementById("sidebarApps");
-    sidebarApps.addEventListener("click", switchContent);
-    sidebarApps.content = "html/apps.html";
+    var apps = document.getElementById("sidebarApps");
+    apps.addEventListener("click", onNavigationClick);
+    apps.content = "html/apps.html";
+    apps.hash = "Apps";
+    sidebarContainer.push(apps);
     // 3D Models
-    sidebarModels = document.getElementById("sidebarModels");
-    sidebarModels.addEventListener("click", switchContent);
-    sidebarModels.content = "html/models.html";
+    var models = document.getElementById("sidebarModels");
+    models.addEventListener("click", onNavigationClick);
+    models.content = "html/models.html";
+    models.hash = "Models";
+    sidebarContainer.push(models);
     // About Me
-    sidebarAbout = document.getElementById("sidebarAbout");
-    sidebarAbout.addEventListener("click", switchContent);
-    sidebarAbout.content = "html/aboutMe.html";
+    var about = document.getElementById("sidebarAbout");
+    about.addEventListener("click", onNavigationClick);
+    about.content = "html/aboutMe.html";
+    about.hash = "About";
+    sidebarContainer.push(about);
     
     sidebar = document.getElementById("sidebar");
     sidebar.width = 180;
@@ -189,4 +228,39 @@ function onLoad() {
     content.style.height = window.innerHeight - 60 + 'px';
     content.style.left = 0 + 'px';
     content.style.marginLeft = 0 + 'px';
+}
+
+function GetHash()
+{
+    // console.log(location.hash);
+    // sidebarContainer.forEach(element => {
+    //     if(location.hash.includes(element.hash))
+    //     {
+    //         console.log("Found It!");
+    //     }
+    //     console.log(element.hash);
+    // });
+    let object = sidebarContainer.find(object => location.hash.includes(object.hash));
+    if(object)
+    {
+        console.log(object.hash);
+        object.click();
+        return;
+    }
+    console.log(gameCatalog[location.hash.slice(1)])
+    object = gameCatalog[location.hash.slice(1)]
+    //object = gameCatalog.find(object => location.hash.includes(object.id));
+    if(object) 
+    {
+        switchContent(object.content)
+        //object.click();
+    }
+
+    // for (const property in sidebarContainer) {
+    //     console.log(property);
+    //     if(location.hash.includes(property.hash))
+    //     {
+    //         console.log(`${property}: ${sidebarContainer[property]}`);
+    //     }
+    //   }
 }
