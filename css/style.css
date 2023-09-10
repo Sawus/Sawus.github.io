@@ -2,9 +2,11 @@
 @font-face {
     font-family: 'CaviarDreams';
     src: url('../fonts/CaviarDreams.ttf');
+    font-family: 'Inconsolata';
+    src: url('../fonts/Inconsolata-VariableFont_wdth,wght.ttf');
 }
 * {
-    font-family: CaviarDreams;
+    font-family: Inconsolata;
 }
 
 *:focus {
@@ -225,6 +227,7 @@ canvas {
     grid-template-columns: 12% 76% 12%;
     align-items: center;
     justify-items: center;
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 
@@ -235,12 +238,19 @@ canvas {
 }
 
 .gameTitle {
+    margin-top: 10px;
+    margin-bottom: 2px;
     text-decoration: underline;
 }
 
 .gameTitle:hover {
     cursor: pointer;
     color: #69306D;
+}
+
+.gameTitleCenter {
+    margin-top: 20px;
+    margin-bottom: 8px;
 }
 
 .leftArrow {
@@ -261,7 +271,6 @@ canvas {
         right: 0;
         text-align: center;
         position: absolute;
-        margin: auto;
         transition: 0.5s;
     }
 
@@ -328,11 +337,11 @@ canvas {
         width: 60%;
         text-align: center;
         position: absolute;
-        padding-bottom: 10px;
-        top: 102px;
+        
+        /*top: 102px;*/
         left: 0;
         right: 0;
-        margin: auto;
+        margin: 15px auto auto auto;
         border: 1px solid silver;
         box-shadow: 3px 3px 0 silver;
         border-radius: 8px;
@@ -407,7 +416,6 @@ canvas {
         min-width: 320px;
         width: 85%;
         text-align: center;
-        padding-bottom: 10px;
         margin: 15px auto auto auto;
         border: 1px solid silver;
         box-shadow: 3px 3px 0 silver;
@@ -443,7 +451,6 @@ canvas {
         min-width: 320px;
         width: 85%;
         text-align: center;
-        padding-bottom: 10px;
         margin: 15px auto auto auto;
         border: 1px solid silver;
         box-shadow: 3px 3px 0 silver;
