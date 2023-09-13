@@ -23,7 +23,7 @@ body {
     background-color: #7b6d8d;
     Images to Use: https://logosbynick.com/wp-content/uploads/2019/07/finished-pattern.png
     */
-    background-color: #F2E8F0;
+    background-color: #F7F7F8;
     height: 100%;
     padding: 0;
     margin: 0;
@@ -53,8 +53,10 @@ canvas {
     height: 60px;
     position: fixed;
     z-index: 1;
-    background-color: #69306D;
-    box-shadow: 0 0 5px #000;
+    background-color: #bc4749;
+    box-shadow: 0 0 3px #EAEAEA;
+    border-bottom: 0px;
+    border-radius: 0 0 16px 0;
     /*background-color: #593f62;
     box-shadow: 0 0 40px -8px #000;*/
 }
@@ -66,11 +68,11 @@ canvas {
     z-index: 1;
     position: fixed;
     transition: 0.5s;
-    border: 1px solid silver;
+    border: 0px solid #EAEAEA;
     border-left: none;
     border-top: none;
-    box-shadow: 3px 3px 0 silver;
-    border-radius: 0 8px 8px 0;
+    box-shadow: 3px 3px 0 #EAEAEA;
+    border-radius: 0 16px 16px 0;
 }
 
 #homeButton {
@@ -79,6 +81,22 @@ canvas {
     top: 5px;
     left: 80px;
     position: absolute;
+}
+
+.header {
+    border: 1px solid #EAEAEA;
+    box-shadow: 3px 3px 0 #EAEAEA;
+    /*box-shadow: 3px 3px 0px #bababa;*/
+    border-radius: 16px;
+    background-color: #ffffff;
+}
+
+.gameMenu {
+    border: 1px solid #EAEAEA;
+    box-shadow: 3px 3px 0 #EAEAEA;
+    /*box-shadow: 3px 3px 0px #bababa;*/
+    border-radius: 16px;
+    background-color: #ffffff;
 }
 
 .sidebarContainer {
@@ -91,9 +109,10 @@ canvas {
     padding: 5px;
     margin: 10px 10px;
     position: relative;
-    border: 1px solid silver;
-    box-shadow: 3px 3px 0 silver;
-    border-radius: 8px;
+    background-color: #F7F7F8;
+    border: 1px solid #EAEAEA;
+    box-shadow: 3px 3px 0 #EAEAEA;
+    border-radius: 16px;
 }
 
 .sidebarItems:hover {
@@ -296,11 +315,6 @@ canvas {
         /* display: block; */
         /* position: relative; */
         /* margin: auto; */
-        border: 1px solid silver;
-        box-shadow: 3px 3px 0 silver;
-        /*box-shadow: 3px 3px 0px #bababa;*/
-        border-radius: 8px;
-        background-color: #ffffff;
     }
 
     .gamesGridContainer {
@@ -324,9 +338,9 @@ canvas {
         /* margin-top: 10px; */
         /* top: 102px; */
         /* left: 40%; */
-        border: 1px solid silver;
-        box-shadow: 3px 3px 0 silver;
-        border-radius: 8px;
+        border: 1px solid #EAEAEA;
+        box-shadow: 3px 3px 0 #EAEAEA;
+        border-radius: 16px;
         background-color: #ffffff;
     }
 
@@ -340,9 +354,9 @@ canvas {
         /* margin-top: 102px; */
         /* top: 102px; */
         /* right: 20%; */
-        border: 1px solid silver;
-        box-shadow: 3px 3px 0 silver;
-        border-radius: 8px;
+        border: 1px solid #EAEAEA;
+        box-shadow: 3px 3px 0 #EAEAEA;
+        border-radius: 16px;
         background-color: #ffffff;
     }
 
@@ -356,9 +370,9 @@ canvas {
         left: 0;
         right: 0;
         margin: 15px auto auto auto;
-        border: 1px solid silver;
-        box-shadow: 3px 3px 0 silver;
-        border-radius: 8px;
+        border: 1px solid #EAEAEA;
+        box-shadow: 3px 3px 0 #EAEAEA;
+        border-radius: 16px;
         background-color: #ffffff;
     }
 
@@ -372,10 +386,6 @@ canvas {
         /* margin-top: 10px; */
         /* top: 102px; */
         /* left: 40%; */
-        border: 1px solid silver;
-        box-shadow: 3px 3px 0 silver;
-        border-radius: 8px;
-        background-color: #ffffff;
     }
 
     video {
@@ -430,11 +440,6 @@ canvas {
         min-width: 320px;
         width: 85%;
         margin: 15px auto auto auto;
-        border: 1px solid silver;
-        box-shadow: 3px 3px 0 silver;
-        /*box-shadow: 3px 3px 0px #bababa;*/
-        border-radius: 8px;
-        background-color: #ffffff;
     }
 
     .middleMenu {
@@ -442,9 +447,9 @@ canvas {
         width: 85%;
         text-align: center;
         margin: 15px auto auto auto;
-        border: 1px solid silver;
-        box-shadow: 3px 3px 0 silver;
-        border-radius: 8px;
+        border: 1px solid #EAEAEA;
+        box-shadow: 3px 3px 0 #EAEAEA;
+        border-radius: 16px;
         background-color: #ffffff;
     }
 
@@ -454,9 +459,9 @@ canvas {
         text-align: center;
         padding-bottom: 10px;
         margin: 15px auto auto auto;
-        border: 1px solid silver;
-        box-shadow: 3px 3px 0 silver;
-        border-radius: 8px;
+        border: 1px solid #EAEAEA;
+        box-shadow: 3px 3px 0 #EAEAEA;
+        border-radius: 16px;
         background-color: #ffffff;
     }
 
@@ -466,9 +471,9 @@ canvas {
         text-align: center;
         padding-bottom: 10px;
         margin: 15px auto auto auto;
-        border: 1px solid silver;
-        box-shadow: 3px 3px 0 silver;
-        border-radius: 8px;
+        border: 1px solid #EAEAEA;
+        box-shadow: 3px 3px 0 #EAEAEA;
+        border-radius: 16px;
         background-color: #ffffff;
     }
 
@@ -477,10 +482,6 @@ canvas {
         width: 85%;
         text-align: center;
         margin: 15px auto auto auto;
-        border: 1px solid silver;
-        box-shadow: 3px 3px 0 silver;
-        border-radius: 8px;
-        background-color: #ffffff;
     }
 
     video {
