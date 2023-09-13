@@ -3,6 +3,7 @@
 
 var x = window.matchMedia("(min-width: 1025px)");
 var running = false;
+var reloaded = true;
 
 var gameCatalog = {
     gooseInc: {
@@ -41,6 +42,7 @@ var gameCatalog = {
 $.get("html/shared.html", function(data){
     $("#shared").replaceWith(data);
     onLoad();
+    console.log()
     getHash();
 });
 
@@ -72,15 +74,15 @@ function updateHamburger() {
 
 function sidebarSlide() {
     let sidebar = getSidebar();
-    let content = getContent();
     let hamburger = getHamburger();
+    let contentWrapper = document.getElementById("contentWrapper");
 
     var openPosition = -sidebar.shadow;
     var closePosition = -sidebar.width;
     
     if (hamburger.className == "hamburger hamburger--elastic is-active") {
         if (x.matches) {
-            content.style.marginLeft = "184px";
+            contentWrapper.style.marginLeft = "184px";
             sidebar.style.width = "180px";
         } else {
             //sidebar.style.transition = "0.5s";
@@ -91,11 +93,11 @@ function sidebarSlide() {
     else {
         if (x.matches) {
             sidebar.style.marginLeft = "0px";
-            content.style.marginLeft = "0px";
+            contentWrapper.style.marginLeft = "0px";
             sidebar.style.width = "180px";
         } else {
             //sidebar.style.transition = "0.5s";
-            content.style.marginLeft = "0px";
+            contentWrapper.style.marginLeft = "0px";
             sidebar.style.marginLeft = "-100%";
         }
     }
@@ -264,7 +266,7 @@ function getHash()
                 
                 setTimeout(function () {
                     onLoadGame(propName);
-                }, 500)
+                }, 1000)
                 
                 return;
             }
@@ -310,37 +312,110 @@ function onNavigationClick(event) {
     //         onLoadGames();
     //     }, 500) 
     // }  
+    //history.pushState(true, '', '#' + event.currentTarget.hash);
+    if(event.currentTarget.hash.includes("game-"))
+        location.hash = event.currentTarget.hash.slice(5);
+    else
+        location.hash = event.currentTarget.hash;
 
-    location.hash = event.currentTarget.hash;
     console.log(event.currentTarget.hash);
 }
 
 function switchContent(content)
-{
-    // Replace Date in Content
-    $.get(content, function(data){
-        $("#content").replaceWith(data);
-    });
-
-    if(content === "html/games.html")
-    {
-        setTimeout(function () {
-            onLoadGames();
-        }, 500)
-    }
-    // Automatically Close Menu
-    // if(event.currentTarget.id.includes("sidebar"))
-    // {
-        
-    // }
+{ 
     let hamberger = getHamburger();
     if (hamburger.className == "hamburger hamburger--elastic is-active")
         updateHamburger();
+
+    if(window.innerWidth < 1025)
+    {
+        // Replace Data in Content
+        $.get(content, function(data){
+            $("#content").replaceWith(data);
+            if(content === "html/games.html")
+            {
+                onLoadGames();    
+            }
+        });
+    }
+    else
+    {
+        if(!reloaded)
+        {
+            fadeOut();
+
+            setTimeout(function () {
+                // Replace Data in Content
+                $.get(content, function(data){
+                    $("#content").replaceWith(data);
+                    if(content === "html/games.html")
+                    {
+                        onLoadGames();    
+                    }
+                });
+            }, 500)  
+        }
+
+        else
+        {
+            reloaded = false;
+            $.get(content, function(data){
+                $("#content").replaceWith(data);
+                if(content === "html/games.html")
+                {
+                    onLoadGames();    
+                }
+            });
+        }
+    }  
+}
+
+function fadeOut()
+{
+    let contentWrapper = document.getElementById("contentWrapper");
+
+    // Slide Out Animation
+    //contentWrapper.style.transform = "translate(-100%, 0px)";
+
+    // Opacity Animation
+    contentWrapper.style.opacity = "0%"
+
+    setTimeout(function () {
+        fadeIn();
+    }, 600)
+}
+
+function fadeIn()
+{
+    let contentWrapper = document.getElementById("contentWrapper");
+
+    // Slide In Animation
+    /*contentWrapper.style.transition = "0.0s";
+    contentWrapper.style.transform = "translate(100%, 0px)";
+    setTimeout(function () {
+        contentWrapper.style.transition = "0.5s";
+        contentWrapper.style.transform = "translate(0%, 0px)";
+    }, 50)*/
+
+    // Opacity Animation
+    contentWrapper.style.opacity = "100%"
 }
 
 function switchImage(event) {
-    // Gets Game That Event Was Called For
-    var game = gameCatalog[event.currentTarget.owner.id];
+
+    var game;
+
+    if(event.currentTarget.owner.id.includes("game-"))
+    {
+        // Gets Game That Event Was Called For
+        game = gameCatalog[event.currentTarget.owner.id.slice(5)];
+    }
+    else
+    {
+        // Gets Game That Event Was Called For
+        game = gameCatalog[event.currentTarget.owner.id];
+    }
+    
 
     if(!game)
         console.log("nada")
