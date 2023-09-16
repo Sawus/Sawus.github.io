@@ -12,7 +12,7 @@ var gameCatalog = {
         content: "html/games/gooseInc.html",
     },
     modifiedRoll: {
-        imgSrc: ["images/tearDevil/TearDevil_0.png", "images/tearDevil/TearDevil_1.png", "images/tearDevil/TearDevil_2.png"],
+        imgSrc: ["images/modifiedRoll/ModifiedRoll_0.png", "images/modifiedRoll/ModifiedRoll_1.png", "images/modifiedRoll/ModifiedRoll_2.png"],
         imgIndex: 0,
         content: "html/games/modifiedRoll.html",
     },
@@ -22,17 +22,17 @@ var gameCatalog = {
         content: "html/games/tearDevil.html",
     },
     jumpGame: {
-        imgSrc: ["images/tearDevil/TearDevil_0.png", "images/tearDevil/TearDevil_1.png", "images/tearDevil/TearDevil_2.png"],
+        imgSrc: ["images/jumpGame/JumpGame_0.png", "images/jumpGame/JumpGame_1.png", "images/jumpGame/JumpGame_2.png", "images/jumpGame/JumpGame_3.png", "images/jumpGame/JumpGame_4.png", "images/jumpGame/JumpGame_5.png", "images/jumpGame/JumpGame_6.png"],
         imgIndex: 0,
         content: "html/games/jumpGame.html",
     },
     isoStrategy: {
-        imgSrc: ["images/tearDevil/TearDevil_0.png", "images/tearDevil/TearDevil_1.png", "images/tearDevil/TearDevil_2.png"],
+        imgSrc: ["images/isoStrategy/IsoStrategy_0.png", "images/isoStrategy/IsoStrategy_1.png", "images/isoStrategy/IsoStrategy_2.png", "images/isoStrategy/IsoStrategy_3.png"],
         imgIndex: 0,
         content: "html/games/isoStrategy.html",
     },
     mathGame: {
-        imgSrc: ["images/tearDevil/TearDevil_0.png", "images/tearDevil/TearDevil_1.png", "images/tearDevil/TearDevil_2.png"],
+        imgSrc: ["images/mathGame/MathGame_0.png", "images/mathGame/MathGame_1.png", "images/mathGame/MathGame_2.png"],
         imgIndex: 0,
         content: "html/games/mathGame.html",
     }
@@ -42,12 +42,10 @@ var gameCatalog = {
 $.get("html/shared.html", function(data){
     $("#shared").replaceWith(data);
     onLoad();
-    console.log()
     getHash();
 });
 
 window.addEventListener('hashchange',() =>{
-    //console.log('The URL has has changed');
     getHash();
 });
 
@@ -159,7 +157,6 @@ function onLoad()
 
 function onLoadGames() {
     let gridContainer = document.querySelector(".gamesGridContainer");
-    console.log(gridContainer);
     let gameContainer = gridContainer.querySelectorAll(".gameMenu");
     //Iterate Through Menus
     gameContainer.forEach(element => {
@@ -194,7 +191,7 @@ function onLoadGame(name)
     let leftArrow = pictureContainer.querySelector(".leftArrow");
     leftArrow.addEventListener("click", switchImage);
     leftArrow.modifier = -1;
-    console.log(gameCatalog[name]);
+    //console.log(gameCatalog[name]);
     leftArrow.owner = pictureContainer;
     let rightArrow = pictureContainer.querySelector(".rightArrow");
     rightArrow.addEventListener("click", switchImage);
@@ -249,7 +246,6 @@ function getButton(value)
         default:
             button = document.getElementById("homeButton");
     }
-    //console.log(button);
     return button;
 }
 
@@ -272,53 +268,19 @@ function getHash()
             }
                 
         }
-        console.log("Its a Game!");
-        //console.log()
     }
     else
     {
         let content = getButton(location.hash.slice(1))
         switchContent(content.content);
     }
-    
-    // let object = sidebarContainer.find(object => location.hash.includes(object.hash));
-    // if(object)
-    // {
-    //     console.log(object.hash);
-    //     object.click();
-    //     return;
-    // }
-    // console.log(gameCatalog[location.hash.slice(1)])
-    // object = gameCatalog[location.hash.slice(1)]
-    // //object = gameCatalog.find(object => location.hash.includes(object.id));
-    // if(object) 
-    // {
-    //     switchContent(object.content);
-    //     //object.click();
-    // }
-    
-    // else
-    // {
-    //     switchContent(home.content);
-    // }
 }
 
 function onNavigationClick(event) {
-    
-    // switchContent(event.currentTarget.content)
-    // // Extra Functionality for Games 
-    // if(event.currentTarget.hash == "Games") {
-    //     setTimeout(function () {
-    //         onLoadGames();
-    //     }, 500) 
-    // }  
-    //history.pushState(true, '', '#' + event.currentTarget.hash);
     if(event.currentTarget.hash.includes("game-"))
         location.hash = event.currentTarget.hash.slice(5);
     else
         location.hash = event.currentTarget.hash;
-
-    console.log(event.currentTarget.hash);
 }
 
 function switchContent(content)
@@ -416,9 +378,6 @@ function switchImage(event) {
         game = gameCatalog[event.currentTarget.owner.id];
     }
     
-
-    if(!game)
-        console.log("nada")
     // Change Index
     game.imgIndex += event.currentTarget.modifier;
     // If Higher Or Lower Then Amount of Pictures, Reset
@@ -428,5 +387,4 @@ function switchImage(event) {
         game.imgIndex = 0;
     // Update Current Picture
     event.currentTarget.owner.querySelector(".gamePictures").src = game.imgSrc[game.imgIndex];
-    console.log(event.currentTarget.owner.id + ": " + game.imgIndex);
 }
